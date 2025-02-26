@@ -1,0 +1,46 @@
+pipeline{ 
+    agent any
+    environment{ 
+        COMPOSE_APP_NAME = "my-compose-app"
+    }
+    stages{ 
+        stage('Start Containers with docker compose'){ 
+            steps{ 
+                script{ 
+                    sh "docker compose -f docker-compose.yml up -d"
+                }
+            }
+        }
+        stage('Wait for service'){ 
+            steps{
+                script{ 
+                    sh "sleep 10"
+                }
+            }
+        }
+        stage('Check Running Containers') {
+            steps {
+                script {
+                    sh "docker ps"
+                }
+            }
+        }
+
+        stage('Stop and Remove Containers') {
+            steps {
+                script {
+                    sh "docker-compose -f docker-compose.yml down"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline executed successfully!"
+        }
+        failure {
+            echo "Pipeline failed!"
+        }
+    }
+}

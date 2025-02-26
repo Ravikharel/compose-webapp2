@@ -29,7 +29,7 @@ pipeline{
         stage('Stop and Remove Containers') {
             steps {
                 script {
-                    sh "docker-compose -f docker-compose.yml down"
+                    sh "docker compose -f docker-compose.yml down"
                 }
             }
         }

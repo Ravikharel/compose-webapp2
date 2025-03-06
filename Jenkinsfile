@@ -48,7 +48,6 @@ pipeline{
             steps { 
                 script { 
                     sh """
-                        scp docker-compose.yml vagrant@192.168.56.13:/
                         docker compose up -d
                     """
                 }
